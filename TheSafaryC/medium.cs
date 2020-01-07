@@ -233,10 +233,8 @@ namespace TheSafaryC
                         }
                         else
                         {
-                            listanimal[indexterambil].x = x;
-                            listanimal[indexterambil].y = y;
-                            listanimal[indexterambil].dalamair = false;
-                            listanimal[indexterambil].dalamtrap = false;
+                          
+                            listanimal[randomarah].dalamtrap = false;
                         }
                         kembalian = true;
                     }
@@ -357,8 +355,8 @@ namespace TheSafaryC
                             if (c == "R")
                             {
                                 kembalian = true;
-                                listanimal[indexterambil].x = x;
-                                listanimal[indexterambil].y = y;
+                                listanimal[randomhewan].x = x;
+                                listanimal[randomarah].y = y;
                             }
                             else
                             {
@@ -407,8 +405,8 @@ namespace TheSafaryC
                         {
                             if (c == "R")
                             {
-                                listanimal[indexterambil].x = x;
-                                listanimal[indexterambil].y = y;
+                                listanimal[randomhewan].x = x;
+                                listanimal[randomarah].y = y;
                                 kembalian = true;
                             }
                             else
@@ -425,8 +423,8 @@ namespace TheSafaryC
                                 {
                                     if (listanimal[randomhewan].power <= listanimal[indexdiseberang].power)
                                     {
-                                        listanimal[indexterambil].x = x;
-                                        listanimal[indexterambil].y = y;
+                                        listanimal[randomhewan].x = x;
+                                        listanimal[randomarah].y = y;
                                         listanimal.RemoveAt(indexdiseberang);
                                         kembalian = true;
                                     }
@@ -464,8 +462,8 @@ namespace TheSafaryC
                         {
                             if (d == "R")
                             {
-                                listanimal[indexterambil].x = x;
-                                listanimal[indexterambil].y = y;
+                                listanimal[randomhewan].x = x;
+                                listanimal[randomarah].y = y;
                                 kembalian = true;
                             }
                             else
@@ -516,8 +514,8 @@ namespace TheSafaryC
                         {
                             if (d == "R")
                             {
-                                listanimal[indexterambil].x = x;
-                                listanimal[indexterambil].y = y;
+                                listanimal[randomhewan].x = x;
+                                listanimal[randomarah].y = y;
                                 kembalian = true;
                             }
                             else
@@ -534,8 +532,8 @@ namespace TheSafaryC
                                 {
                                     if (listanimal[randomhewan].power <= listanimal[indexdiseberang].power)
                                     {
-                                        listanimal[indexterambil].x = x;
-                                        listanimal[indexterambil].y = y;
+                                        listanimal[randomhewan].x = x;
+                                        listanimal[randomarah].y = y;
                                         listanimal.RemoveAt(indexdiseberang);
                                         kembalian = true;
                                     }
