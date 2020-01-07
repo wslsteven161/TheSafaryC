@@ -200,14 +200,30 @@ namespace TheSafaryC
         {
             random = new Random();
             randomhewan = random.Next(0, 8);
-            randomarah = random.Next(0, 3);
+            randomarah = random.Next(0, 4);
 
             //cari selisih x dan selisih y dari pergerakan player
             bool kembalian = false;
             int selisih_x = listanimal[indexterambil].x - x;
             int selisih_y = listanimal[indexterambil].y - y;
+            if (randomarah== 1)
+            {
+                listanimal[randomarah].y = y + 1;
+            } 
+            else if (randomarah == 2)
+            {
+                listanimal[randomarah].x = x + 1;
+            }
+            else if (randomarah == 3)
+            {
+                listanimal[randomarah].y = y - 1;
+            }
+            else if (randomarah == 4)
+            {
+                listanimal[randomarah].x = x - 1;
+            }
             // cek apakah x atau y terdapat salah satu sejajar karna player tidak dapat bergerak miring
-            if (listanimal[indexterambil].x == x || listanimal[indexterambil].y == y)
+            if (listanimal[indexterambil].x == x || listanimal[indexterambil].y == y || listanimal[randomarah].y == 1 || listanimal[randomhewan].x == 2)
             {
                 //jika selisih 1 maka player hanya bergerak 1 langkah
                 if (selisih_x == 1 || selisih_y == 1 || selisih_x == -1 || selisih_y == -1)
@@ -217,28 +233,26 @@ namespace TheSafaryC
                     {
                         listanimal[indexterambil].x = x;
                         listanimal[indexterambil].y = y;
+                        listanimal[randomhewan].x = x;
+                        listanimal[randomhewan].y = y;
                         listanimal[indexterambil].dalamair = false;
+                        listanimal[randomhewan].dalamair = false;
 
                         if (map[y, x] == "TT" && listanimal[randomhewan].pemilik == "M")
                         {
-                            listanimal[randomhewan].x = x;
-                            listanimal[randomarah].y = y;
-                            listanimal[randomhewan].dalamair = false;
                             listanimal[randomhewan].dalamtrap = true;
                         }
                         else if (map[y, x] == "TM" && listanimal[indexterambil].pemilik == "T")
                         {
-                            
                             listanimal[indexterambil].dalamtrap = true;
                         }
                         else
                         {
-                          
                             listanimal[randomarah].dalamtrap = false;
                         }
                         kembalian = true;
                     }
-                    else if (map[y, x] == "A" && listanimal[indexterambil].power == 8 && listanimal[indexterambil].pemilik == "T")
+                    else if (map[y, x] == "A" && listanimal[indexterambil].power == 8 && listanimal[indexterambil].pemilik == "T" || map[y, x] == "A" && listanimal[randomhewan].power == 8 && listanimal[randomhewan].pemilik == "M")
                     {
                         listanimal[indexterambil].x = x;
                         listanimal[indexterambil].y = y;
@@ -249,19 +263,6 @@ namespace TheSafaryC
                     else if (map[y, x] == "FT" && listanimal[indexterambil].pemilik == "T")
                     {
                         MessageBox.Show("Blue Team WIN");
-                        int jumawal = 8;
-                        int hitung = 0;
-                        for (int i = 0; i < listanimal.Count; i++)
-                        {
-                            if (listanimal[i].pemilik == "M")
-                            {
-                                hitung++;
-                            }
-                        }
-                        jumawal -= hitung;
-                        form_win f = new form_win("BIRU", "GOAL", jumawal + "");
-                        f.Visible = true;
-                        this.Close();
                         listanimal[indexterambil].x = x;
                         listanimal[indexterambil].y = y;
                         listanimal[indexterambil].dalamair = false;
@@ -271,21 +272,8 @@ namespace TheSafaryC
                     else if (map[y, x] == "FM" && listanimal[randomhewan].pemilik == "M")
                     {
                         MessageBox.Show("Red Team WIN");
-                        int jumawal = 8;
-                        int hitung = 0;
-                        for (int i = 0; i < listanimal.Count; i++)
-                        {
-                            if (listanimal[i].pemilik == "T")
-                            {
-                                hitung++;
-                            }
-                        }
-                        jumawal -= hitung;
-                        form_win f = new form_win("MERAH", "GOAL", jumawal + "");
-                        f.Visible = true;
-                        this.Close();
                         listanimal[randomhewan].x = x;
-                        listanimal[randomarah].y = y;
+                        listanimal[randomhewan].y = y;
                         listanimal[randomhewan].dalamair = false;
                         listanimal[randomhewan].dalamtrap = false;
                         kembalian = true;
@@ -299,7 +287,7 @@ namespace TheSafaryC
                                 if (listanimal[randomhewan].power == 8 && listanimal[i].power == 1 && listanimal[i].dalamair == false)
                                 {
                                     listanimal[randomhewan].x = x;
-                                    listanimal[randomarah].y = y;
+                                    listanimal[randomhewan].y = y;
                                     listanimal.RemoveAt(i);
                                     kembalian = true;
                                 }
@@ -313,7 +301,7 @@ namespace TheSafaryC
                                     else
                                     {
                                         listanimal[randomhewan].x = x;
-                                        listanimal[randomarah].y = y;
+                                        listanimal[randomhewan].y = y;
                                         listanimal.RemoveAt(i);
                                         kembalian = true;
                                     }
@@ -321,14 +309,14 @@ namespace TheSafaryC
                                 else if (listanimal[randomhewan].power == 8 && listanimal[i].power == 8)
                                 {
                                     listanimal[randomhewan].x = x;
-                                    listanimal[randomarah].y = y;
+                                    listanimal[randomhewan].y = y;
                                     listanimal.RemoveAt(i);
                                     kembalian = true;
                                 }
                                 else if (listanimal[i].dalamtrap == true)
                                 {
                                     listanimal[randomhewan].x = x;
-                                    listanimal[randomarah].y = y;
+                                    listanimal[randomhewan].y = y;
                                     listanimal.RemoveAt(i);
                                     kembalian = true;
                                 }
@@ -342,28 +330,71 @@ namespace TheSafaryC
                     }
                 }
                 //cek jika player bergerak 2 langkah
-                else if ((selisih_x == 3 || selisih_x == -3) && (listanimal[randomhewan].power == 2 || listanimal[randomhewan].power == 3))
+                else if ((selisih_x == 3 || selisih_x == -3) && (listanimal[indexterambil].power == 2 || listanimal[indexterambil].power == 3) || (listanimal[randomhewan].power == 2 || listanimal[randomhewan].power == 3))
                 {
                     //cek player bergerak ke kiri atau ke kanan dan cek langkah player ke depan
                     if (selisih_x > 0)
                     {
-                        String a = map[listanimal[randomarah].y, listanimal[randomhewan].x - 1];
-                        String b = map[listanimal[randomarah].y, listanimal[randomhewan].x - 2];
-                        String c = map[listanimal[randomarah].y, listanimal[randomhewan].x - 3];
+                        String a = map[listanimal[indexterambil].y, listanimal[indexterambil].x - 1];
+                        String b = map[listanimal[indexterambil].y, listanimal[indexterambil].x - 2];
+                        String c = map[listanimal[indexterambil].y, listanimal[indexterambil].x - 3];
+                        String d = map[listanimal[randomhewan].y, listanimal[randomhewan].x - 1];
+                        String e = map[listanimal[randomhewan].y, listanimal[randomhewan].x - 2];
+                        String f = map[listanimal[randomhewan].y, listanimal[randomhewan].x - 3];
                         if (a == "A" && b == "A")
                         {
                             if (c == "R")
                             {
                                 kembalian = true;
-                                listanimal[randomhewan].x = x;
-                                listanimal[randomarah].y = y;
+                                listanimal[indexterambil].x = x;
+                                listanimal[indexterambil].y = y;
                             }
                             else
                             {
                                 int indexdiseberang = -1;
                                 for (int i = 0; i < listanimal.Count; i++)
                                 {
-                                    if (listanimal[i].y == listanimal[randomarah].y && listanimal[i].x == listanimal[randomhewan].x - 3)
+                                    if (listanimal[i].y == listanimal[indexterambil].y && listanimal[i].x == listanimal[indexterambil].x - 3)
+                                    {
+                                        indexdiseberang = i;
+                                    }
+                                }
+                                if (listanimal[indexdiseberang].pemilik != listanimal[indexterambil].pemilik)
+                                {
+                                    if (listanimal[indexterambil].power <= listanimal[indexdiseberang].power)
+                                    {
+                                        listanimal[indexterambil].x = x;
+                                        listanimal[indexterambil].y = y;
+                                        listanimal.RemoveAt(indexdiseberang);
+                                        kembalian = true;
+                                    }
+                                    else
+                                    {
+                                        kembalian = false;
+                                        lbfalse.Text = "hewan yang ingin dimakan tidak valid";
+                                    }
+                                }
+                                else
+                                {
+                                    kembalian = false;
+                                    lbfalse.Text = "hewan yang ingin dimakan tidak valid";
+                                }
+                            }
+                        }
+                        else if (d == "A" && e == "A")
+                        {
+                            if (f == "R")
+                            {
+                                kembalian = true;
+                                listanimal[randomhewan].x = x;
+                                listanimal[randomhewan].y = y;
+                            }
+                            else
+                            {
+                                int indexdiseberang = -1;
+                                for (int i = 0; i < listanimal.Count; i++)
+                                {
+                                    if (listanimal[i].y == listanimal[randomhewan].y && listanimal[i].x == listanimal[randomhewan].x - 3)
                                     {
                                         indexdiseberang = i;
                                     }
@@ -373,7 +404,7 @@ namespace TheSafaryC
                                     if (listanimal[randomhewan].power <= listanimal[indexdiseberang].power)
                                     {
                                         listanimal[randomhewan].x = x;
-                                        listanimal[randomarah].y = y;
+                                        listanimal[randomhewan].y = y;
                                         listanimal.RemoveAt(indexdiseberang);
                                         kembalian = true;
                                     }
@@ -398,15 +429,18 @@ namespace TheSafaryC
                     }
                     else
                     {
-                        String a = map[listanimal[randomarah].y, listanimal[randomhewan].x + 1];
-                        String b = map[listanimal[randomarah].y, listanimal[randomhewan].x + 2];
-                        String c = map[listanimal[randomarah].y, listanimal[randomhewan].x + 3];
+                        String a = map[listanimal[indexterambil].y, listanimal[randomhewan].x + 1];
+                        String b = map[listanimal[indexterambil].y, listanimal[randomhewan].x + 2];
+                        String c = map[listanimal[indexterambil].y, listanimal[randomhewan].x + 3];
+                        String d = map[listanimal[randomhewan].y, listanimal[randomhewan].x - 1];
+                        String e = map[listanimal[randomhewan].y, listanimal[randomhewan].x - 2];
+                        String f = map[listanimal[randomhewan].y, listanimal[randomhewan].x - 3];
                         if (a == "A" && b == "A")
                         {
                             if (c == "R")
                             {
-                                listanimal[randomhewan].x = x;
-                                listanimal[randomarah].y = y;
+                                listanimal[indexterambil].x = x;
+                                listanimal[indexterambil].y = y;
                                 kembalian = true;
                             }
                             else
@@ -414,71 +448,14 @@ namespace TheSafaryC
                                 int indexdiseberang = -1;
                                 for (int i = 0; i < listanimal.Count; i++)
                                 {
-                                    if (listanimal[i].y == listanimal[randomarah].y && listanimal[i].x == listanimal[randomhewan].x + 3)
+                                    if (listanimal[i].y == listanimal[indexterambil].y && listanimal[i].x == listanimal[indexterambil].x + 3)
                                     {
                                         indexdiseberang = i;
                                     }
                                 }
-                                if (listanimal[indexdiseberang].pemilik != listanimal[randomhewan].pemilik)
+                                if (listanimal[indexdiseberang].pemilik != listanimal[indexterambil].pemilik)
                                 {
-                                    if (listanimal[randomhewan].power <= listanimal[indexdiseberang].power)
-                                    {
-                                        listanimal[randomhewan].x = x;
-                                        listanimal[randomarah].y = y;
-                                        listanimal.RemoveAt(indexdiseberang);
-                                        kembalian = true;
-                                    }
-                                    else
-                                    {
-                                        kembalian = false;
-                                        lbfalse.Text = "hewan yang ingin dimakan tidak valid";
-                                    }
-                                }
-                                else
-                                {
-                                    kembalian = false;
-                                    lbfalse.Text = "hewan yang ingin dimakan tidak valid";
-                                }
-                            }
-                        }
-                        else
-                        {
-                            kembalian = false;
-                            lbfalse.Text = "tidak dapat melewati tikus di air";
-                        }
-                    }
-                }
-                //cek jika player bergerak 3 langkah
-                else if ((selisih_y == 4 || selisih_y == -4) && (listanimal[randomhewan].power == 2 || listanimal[randomhewan].power == 3))
-                {
-                    //cek player bergerak ke bawah atau ke atas dan cek langkah player ke depan
-                    if (selisih_y > 0)
-                    {
-                        String a = map[listanimal[randomarah].y - 1, listanimal[randomhewan].x];
-                        String b = map[listanimal[randomarah].y - 2, listanimal[randomhewan].x];
-                        String c = map[listanimal[randomarah].y - 3, listanimal[randomhewan].x];
-                        String d = map[listanimal[randomarah].y - 4, listanimal[randomhewan].x];
-                        if (a == "A" && b == "A" && c == "A")
-                        {
-                            if (d == "R")
-                            {
-                                listanimal[randomhewan].x = x;
-                                listanimal[randomarah].y = y;
-                                kembalian = true;
-                            }
-                            else
-                            {
-                                int indexdiseberang = -1;
-                                for (int i = 0; i < listanimal.Count; i++)
-                                {
-                                    if (listanimal[i].y == listanimal[randomarah].y - 4 && listanimal[i].x == listanimal[randomhewan].x)
-                                    {
-                                        indexdiseberang = i;
-                                    }
-                                }
-                                if (listanimal[indexdiseberang].pemilik != listanimal[randomhewan].pemilik)
-                                {
-                                    if (listanimal[randomhewan].power <= listanimal[indexdiseberang].power)
+                                    if (listanimal[indexterambil].power <= listanimal[indexdiseberang].power)
                                     {
                                         listanimal[indexterambil].x = x;
                                         listanimal[indexterambil].y = y;
@@ -504,12 +481,69 @@ namespace TheSafaryC
                             lbfalse.Text = "tidak dapat melewati tikus di air";
                         }
                     }
+                }
+                //cek jika player bergerak 3 langkah
+                else if ((selisih_y == 4 || selisih_y == -4) && (listanimal[randomhewan].power == 2 || listanimal[randomhewan].power == 3) || (listanimal[randomhewan].power == 2 || listanimal[randomhewan].power == 3))
+                {
+                    //cek player bergerak ke bawah atau ke atas dan cek langkah player ke depan
+                    if (selisih_y > 0)
+                    {
+                        String a = map[listanimal[indexterambil].y - 1, listanimal[randomhewan].x];
+                        String b = map[listanimal[indexterambil].y - 2, listanimal[randomhewan].x];
+                        String c = map[listanimal[indexterambil].y - 3, listanimal[randomhewan].x];
+                        String d = map[listanimal[indexterambil].y - 4, listanimal[randomhewan].x];
+                        if (a == "A" && b == "A" && c == "A")
+                        {
+                            if (d == "R")
+                            {
+                                listanimal[randomhewan].x = x;
+                                listanimal[randomarah].y = y;
+                                kembalian = true;
+                            }
+                            else
+                            {
+                                int indexdiseberang = -1;
+                                for (int i = 0; i < listanimal.Count; i++)
+                                {
+                                    if (listanimal[i].y == listanimal[randomarah].y - 4 && listanimal[i].x == listanimal[randomhewan].x)
+                                    {
+                                        indexdiseberang = i;
+                                    }
+                                }
+                                if (listanimal[indexdiseberang].pemilik != listanimal[randomhewan].pemilik)
+                                {
+                                    if (listanimal[randomhewan].power <= listanimal[indexdiseberang].power)
+                                    {
+                                        listanimal[randomhewan].x = x;
+                                        listanimal[randomarah].y = y;
+                                        listanimal.RemoveAt(indexdiseberang);
+                                        kembalian = true;
+                                    }
+                                    else
+                                    {
+                                        kembalian = false;
+                                        lbfalse.Text = "hewan yang ingin dimakan tidak valid";
+                                    }
+                                }
+                                else
+                                {
+                                    kembalian = false;
+                                    lbfalse.Text = "hewan yang ingin dimakan tidak valid";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            kembalian = false;
+                            lbfalse.Text = "tidak dapat melewati tikus di air";
+                        }
+                    }
                     if (selisih_y < 0)
                     {
-                        String a = map[listanimal[randomarah].y + 1, listanimal[randomhewan].x];
-                        String b = map[listanimal[randomarah].y + 2, listanimal[randomhewan].x];
-                        String c = map[listanimal[randomarah].y + 3, listanimal[randomhewan].x];
-                        String d = map[listanimal[randomarah].y + 4, listanimal[randomhewan].x];
+                        String a = map[listanimal[indexterambil].y + 1, listanimal[randomhewan].x];
+                        String b = map[listanimal[indexterambil].y + 2, listanimal[randomhewan].x];
+                        String c = map[listanimal[indexterambil].y + 3, listanimal[randomhewan].x];
+                        String d = map[listanimal[indexterambil].y + 4, listanimal[randomhewan].x];
                         if (a == "A" && b == "A" && c == "A")
                         {
                             if (d == "R")
